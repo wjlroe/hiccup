@@ -1,6 +1,6 @@
 (ns hiccup.page
   "Functions for setting up HTML pages."
-  (:use hiccup.core 
+  (:use hiccup.core
         hiccup.util
         hiccup.def))
 
@@ -47,27 +47,33 @@
   [options & contents]
   (if-not (map? options)
     `(xhtml {} ~options ~@contents)
-    `(let [options# ~options]
-       (html {:mode :xml}
-         (xml-declaration (options# :encoding "UTF-8"))
-         (doctype :xhtml-strict)
-         (xhtml-tag (options# :lang) ~@contents)))))
+    (let [doctype (or (options :doctype)
+                      (doctype :xhtml-strict))
+          options (dissoc options :doctype)]
+      `(let [options# ~options]
+         (html {:mode :xml}
+               (xml-declaration (options# :encoding "UTF-8"))
+               ~doctype
+               (xhtml-tag (options# :lang) ~@contents))))))
 
 (defmacro html5
   "Create a HTML5 document with the supplied contents."
   [options & contents]
   (if-not (map? options)
     `(html5 {} ~options ~@contents)
-    (if (options :xml?)
-      `(let [options# (dissoc ~options :xml?)]
-         (html {:mode :xml}
-           (xml-declaration (options# :encoding "UTF-8"))
-           (doctype :html5)
-           (xhtml-tag options# (options# :lang) ~@contents)))
-      `(let [options# (dissoc ~options :xml?)]
-         (html {:mode :html}
-           (doctype :html5)
-           [:html options# ~@contents])))))
+    (let [doctype (or (options :doctype)
+                      (doctype :html5))
+          options (dissoc options :doctype)]
+      (if (options :xml?)
+        `(let [options# (dissoc ~options :xml?)]
+           (html {:mode :xml}
+                 (xml-declaration (options# :encoding "UTF-8"))
+                 ~doctype
+                 (xhtml-tag options# (options# :lang) ~@contents)))
+        `(let [options# (dissoc ~options :xml?)]
+           (html {:mode :html}
+                 ~doctype
+                 [:html options# ~@contents]))))))
 
 (defn include-js
   "Include a list of external javascript files."
