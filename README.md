@@ -1,6 +1,8 @@
 Hiccup
 ======
 
+This fork adds doctype options to `hiccup.page/html5` and `hiccup.page/xhtml`
+
 [![Build Status](https://secure.travis-ci.org/weavejester/hiccup.png)](http://travis-ci.org/weavejester/hiccup)
 
 Hiccup is a library for representing HTML in Clojure. It uses vectors
@@ -11,7 +13,7 @@ Install
 
 Add the following dependency to your `project.clj` file:
 
-    [hiccup "1.0.4"]
+    [org.clojars.wjlroe/hiccup "1.0.5-SNAPSHOT"]
 
 Documentation
 -------------
