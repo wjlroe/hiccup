@@ -1,5 +1,5 @@
 (defproject org.clojars.wjlroe/hiccup "1.0.5-SNAPSHOT"
-  :description "A fast library for rendering HTML in Clojure"
+  :description "A fast library for rendering HTML in Clojure. This fork adds a doctype override"
   :url "http://github.com/weavejester/hiccup"
   :dependencies [[org.clojure/clojure "1.2.1"]]
   :plugins [[codox "0.6.4"]]
